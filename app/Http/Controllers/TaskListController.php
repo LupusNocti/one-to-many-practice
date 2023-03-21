@@ -8,92 +8,42 @@ use Illuminate\Support\Facades\Validator;
 
 class TaskListController extends Controller
 {
-    public function create()
+    function index()
 {
-    // Show the create form
-    return view('tasklists.create');
-}
-
-public function store(Request $request)
-{
-    // Validate the form data
-    $validatedData = $request->validate([
-        'name' => 'required|max:255',
-        // Add any other validation rules as needed
-    ]);
-
-    // Create a new TaskList instance
-    $taskList = new TaskList;
-
-    // Assign the form data to the TaskList instance
-    $taskList->name = $validatedData['name'];
-    // Add any other fields as needed
-
-    // Save the TaskList instance to the database
-    $taskList->save();
-
-    // Redirect the user to the index page with a success message
-    return redirect('/tasklists')->with('success', 'TaskList created successfully.');
-}
-
-public function index()
-{
-    // Get all the TaskLists from the database
     $taskLists = TaskList::all();
-
-    // Show the index page with the TaskLists
-    return view('tasklists.index', ['taskLists' => $taskLists]);
+    return view('task_lists.index', compact('taskLists'));
 }
 
-public function show($id)
+// Show the form for creating a new task list
+function create()
 {
-    // Find the TaskList with the given ID
-    $taskList = TaskList::findOrFail($id);
-
-    // Show the TaskList details page
-    return view('tasklists.show', ['taskList' => $taskList]);
-}
-public function edit($id)
-{
-    // Find the TaskList with the given ID
-    $taskList = TaskList::findOrFail($id);
-
-    // Show the edit form
-    return view('tasklists.edit', ['taskList' => $taskList]);
+    return view('task_lists.create');
 }
 
-public function update(Request $request, $id)
+// Store a newly created task list in storage.
+function store(Request $request)
 {
-    // Validate the form data
-    $validatedData = $request->validate([
-        'name' => 'required|max:255',
-        // Add any other validation rules as needed
-    ]);
-
-    // Find the TaskList with the given ID
-    $taskList = TaskList::findOrFail($id);
-
-    // Update the TaskList with the form data
-    $taskList->name = $validatedData['name'];
-    // Add any other fields as needed
-
-    // Save the updated TaskList to the database
-    $taskList->save();
-
-    // Redirect the user to the index page with a success message
-    return redirect('/tasklists')->with('success', 'TaskList updated successfully.');
+    TaskList::create($request->all());
+    return redirect()->route('task_lists.index');
 }
 
-public function destroy($id)
+// Show the form for editing the specified task list.
+function edit(TaskList $taskList)
 {
-    // Find the TaskList with the given ID
-    $taskList = TaskList::findOrFail($id);
+    return view('task_lists.edit', compact('taskList'));
+}
 
-    // Delete the TaskList from the database
+// Update the specified task list in storage.
+function update(Request $request, TaskList $taskList)
+{
+    $taskList->update($request->all());
+    return redirect()->route('task_lists.index');
+}
+
+// Remove the specified task list from storage.
+function destroy(TaskList $taskList)
+{
     $taskList->delete();
-
-    // Redirect the user to the index page with a success message
-    return redirect('/tasklists')->with('success', 'TaskList deleted successfully.');
+    return redirect()->route('task_lists.index');
 }
-
 }

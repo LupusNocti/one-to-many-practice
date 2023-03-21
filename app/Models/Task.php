@@ -9,8 +9,8 @@ class Task extends Model
 {
     use HasFactory;
 
-    public function taskList()
+    public function taskLists()
     {
-        return $this->hasMany(TaskList::class); 
+        return $this->belongsTo(TaskList::class); 
     }
 }

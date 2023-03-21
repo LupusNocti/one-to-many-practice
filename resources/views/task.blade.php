@@ -31,7 +31,7 @@
              </div>
          </form>
      </div>
- 
+     
     <!-- Current Tasks -->
     @if (count($tasks) > 0)
         <div class="panel panel-default">
@@ -66,6 +66,9 @@
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" class="btn btn-danger">
                                         <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-trash"></i> View
                                     </button>
                                 </form>
                             </td>

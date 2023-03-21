@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TaskList extends Model
 {
     use HasFactory;
-
-    public function tasks()
-    {
-        return $this->belongsTo(Task::class); 
-    }
+    protected $fillable = [
+        'name'
+        // add other fields that are allowed to be mass-assigned here
+    ];
 }

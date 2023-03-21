@@ -13,12 +13,8 @@ return new class extends Migration
     {
         Schema::create('task_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tasklist_id')->unsigned();
             $table->string('name');
             $table->timestamps();
-            $table->foreign('tasklist_id')
-                ->references('id')
-                ->on('tasks');
         });
     }
 
